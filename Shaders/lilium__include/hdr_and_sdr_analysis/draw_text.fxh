@@ -29,93 +29,80 @@ float2 GetPositonCoordsFromRegularCoords(
 //extract all digits without causing float issues
 uint _6th(precise const float Float)
 {
-  return uint(Float) / 100000;
+  return uint(Float) / 100000u;
 }
 
 uint _5th(precise const float Float)
 {
-  return uint(Float) /  10000;
+  return uint(Float) /  10000u;
 }
 
 uint _4th(precise const float Float)
 {
-  return uint(Float) /   1000;
+  return uint(Float) /   1000u;
 }
 
 uint _3rd(precise const float Float)
 {
-  return uint(Float) /    100;
+  return uint(Float) /    100u;
 }
 
 uint _2nd(precise const float Float)
 {
-  return uint(Float) /     10;
+  return uint(Float) /     10u;
 }
 
 uint _1st(precise const float Float)
 {
-  return uint(Float) %     10;
+  return uint(Float) %     10u;
 }
 
 
 uint d1st(precise const float Float)
 {
-  return uint(Float % 1.f *       10.f) % 10;
+  return uint((Float % 1.f) *       10.f) % 10u;
 }
 
 uint d2nd(precise const float Float)
 {
-  return uint(Float % 1.f *      100.f) % 10;
+  return uint((Float % 1.f) *      100.f) % 10u;
 }
 
 uint d3rd(precise const float Float)
 {
-  if (Float < 10000.f)
-  {
-    return uint(Float % 1.f *     1000.f) % 10;
-  }
-  return 10;
-}
-
-uint _d3rd(precise const float Float)
-{
-  return uint(Float % 1.f *     1000.f) % 10;
+  return uint((Float % 1.f) *     1000.f) % 10u;
 }
 
 uint d4th(precise const float Float)
 {
-  if (Float < 1000.f)
-  {
-    return uint(Float % 1.f *    10000.f) % 10;
-  }
-  return 10;
+  return uint((Float % 1.f) *    10000.f) % 10u;
 }
 
 uint d5th(precise const float Float)
 {
-  if (Float < 100.f)
+  if (Float < 10000.f)
   {
-    return uint(Float % 1.f *   100000.f) % 10;
+    return uint((Float % 1.f) *   100000.f) % 10u;
   }
-  return 10;
+  return 11u;
 }
 
 uint d6th(precise const float Float)
 {
-  if (Float < 10.f)
+  if (Float < 1000.f)
   {
-    return uint(Float % 1.f *  1000000.f) % 10;
+    return uint((Float % 1.f) *  1000000.f) % 10u;
   }
-  return 10;
+  return 11u;
 }
 
 uint d7th(precise const float Float)
 {
-  if (Float < 1.f)
+  if (Float < 100.f)
   {
-    return uint(Float % 1.f * 10000000.f) % 10;
+    return uint((Float % 1.f) * 10000000.f) % 10u;
   }
-  return 10;
+  return 11u;
 }
 
 
@@ -123,11 +110,11 @@ uint GetNumberAboveZero(precise uint CurNumber)
 {
   if (CurNumber > 0)
   {
-    return CurNumber % 10;
+    return CurNumber % 10u;
   }
   else
   {
-    return 10;
+    return 11u;
   }
 }
 
@@ -312,7 +299,7 @@ void CS_GetGamutNumbers(uint3 GID  : SV_GroupID,
     break;
     default:
     {
-      precise const uint _05 = _d3rd(GroupGamut);
+      precise const uint _05 = d3rd(GroupGamut);
       tex2Dstore(StorageMaxAvgMinNitsAndGamutCounterAndShowNumbers, storePosOffset + int2(DTID.x, 0), _05);
     }
     break;
